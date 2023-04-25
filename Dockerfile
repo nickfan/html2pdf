@@ -14,14 +14,21 @@ ARG TERM
 ENV TERM=${TERM}
 ARG WKHTMLTOPDF_VERSION
 ENV WKHTMLTOPDF_VERSION=${WKHTMLTOPDF_VERSION}
+ENV LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
+ENV LD_LIBRARY_PATH=/usr/local/lib64:${LD_LIBRARY_PATH}
+
 SHELL ["/bin/bash", "-c"]
 
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     sudo net-tools iputils-ping iproute2 telnet curl wget apt-transport-https ca-certificates software-properties-common \
-    build-essential gcc g++ make cmake autoconf automake patch gdb libtool cpp pkg-config libc6-dev libncurses-dev sqlite sqlite3 openssl unixodbc \
+    build-essential gcc g++ make cmake autoconf automake patch gdb libtool cpp pkg-config libc6-dev libncurses-dev sqlite sqlite3 openssl unixodbc gawk bison \
     libpng-dev libjpeg-dev libfreetype6-dev xfonts-75dpi x11-common libxrender-dev libxext-dev xfonts-base xfonts-encodings xfonts-utils fonts-dejavu-core fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
+
+RUN wget -c https://ftp.gnu.org/gnu/glibc/glibc-2.29.tar.gz ; \
+    tar -zxvf glibc-2.29.tar.gz ; \
+    mkdir glibc-2.29/build && cd glibc-2.29/build && ../configure --prefix=/usr/local --disable-sanity-checks && make -j18 && sudo make install
 
 RUN curl -L -o /root/wkhtmltox_${WKHTMLTOPDF_VERSION}.focal_amd64.deb https://github.com/wkhtmltopdf/packaging/releases/download/${WKHTMLTOPDF_VERSION}/wkhtmltox_${WKHTMLTOPDF_VERSION}.focal_amd64.deb
 RUN dpkg -i /root/wkhtmltox_${WKHTMLTOPDF_VERSION}.focal_amd64.deb && \
