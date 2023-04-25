@@ -31,7 +31,7 @@ RUN mkdir -p /usr/local/etc && touch /usr/local/etc/ld.so.conf && echo $'# local
 RUN wget -c https://ftp.gnu.org/gnu/glibc/glibc-2.29.tar.gz ; \
     tar -zxvf glibc-2.29.tar.gz ; \
     mkdir glibc-2.29/build && cd glibc-2.29/build && ../configure --prefix=/usr/local --disable-sanity-checks && make -j18 && sudo make install
-RUN mv /lib/x86_64-linux-gnu/libm.so.6 /lib/x86_64-linux-gnu/libm.so.6.origin && mv /lib/x86_64-linux-gnu/libc.so.6 /lib/x86_64-linux-gnu/libc.so.6.origin && \
+RUN mv /lib/x86_64-linux-gnu/libm.so.6 /lib/x86_64-linux-gnu/libm.so.6.origin && \
     ln -s /usr/local/lib/libm.so.6 /lib/x86_64-linux-gnu/ && \
     ln -s /usr/local/lib/libc.so.6 /lib/x86_64-linux-gnu/
 RUN curl -L -o /root/wkhtmltox_${WKHTMLTOPDF_VERSION}.focal_amd64.deb https://github.com/wkhtmltopdf/packaging/releases/download/${WKHTMLTOPDF_VERSION}/wkhtmltox_${WKHTMLTOPDF_VERSION}.focal_amd64.deb
