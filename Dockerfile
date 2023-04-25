@@ -20,6 +20,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
     sudo net-tools iputils-ping iproute2 telnet curl wget apt-transport-https ca-certificates software-properties-common \
+    build-essential gcc g++ make cmake autoconf automake patch gdb libtool cpp pkg-config libc6-dev libncurses-dev sqlite sqlite3 openssl unixodbc \
     libpng-dev libjpeg-dev libfreetype6-dev xfonts-75dpi x11-common libxrender-dev libxext-dev xfonts-base xfonts-encodings xfonts-utils fonts-dejavu-core fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
 
 RUN curl -L -o /root/wkhtmltox_${WKHTMLTOPDF_VERSION}.focal_amd64.deb https://github.com/wkhtmltopdf/packaging/releases/download/${WKHTMLTOPDF_VERSION}/wkhtmltox_${WKHTMLTOPDF_VERSION}.focal_amd64.deb
