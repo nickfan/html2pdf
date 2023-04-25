@@ -24,6 +24,10 @@ RUN set -eux; \
     build-essential gcc g++ make cmake autoconf automake patch gdb libtool cpp pkg-config libc6-dev libncurses-dev sqlite sqlite3 openssl unixodbc gawk bison \
     libpng-dev libjpeg-dev libfreetype6-dev xfonts-75dpi x11-common libxrender-dev libxext-dev xfonts-base xfonts-encodings xfonts-utils fonts-dejavu-core fonts-wqy-microhei fonts-wqy-zenhei xfonts-wqy
 
+RUN mkdir -p /usr/local/etc && touch /usr/local/etc/ld.so.conf && echo $'# local libs \n\
+/usr/local/lib \n\
+ ' > /usr/local/etc/ld.so.conf
+
 RUN wget -c https://ftp.gnu.org/gnu/glibc/glibc-2.29.tar.gz ; \
     tar -zxvf glibc-2.29.tar.gz ; \
     mkdir glibc-2.29/build && cd glibc-2.29/build && ../configure --prefix=/usr/local --disable-sanity-checks && make -j18 && sudo make install
